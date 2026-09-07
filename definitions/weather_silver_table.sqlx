@@ -1,0 +1,10 @@
+config {
+  type: "table",
+  schema: "etl_training_bq_dev",
+  name: "weather_silver_table",
+  description: "Silver table containing clean weather data extracted from the bronze weather source.",
+}
+
+SELECT 
+*
+FROM ${ref("weather_bronze_table")}
