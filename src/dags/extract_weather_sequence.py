@@ -14,7 +14,7 @@ import requests,json,os
 ENV = os.getenv("ENVIRONMENT","dev")
 print("Hello Aravind you are in: ",ENV)
 GCS_BUCKET = f"etl-training-bk-{ENV}"
-BQ_DATASET = f"etl_training_bq" if env == 'prod' else f"etl_training_bq_{env}"
+BQ_DATASET = f"etl_training_bq" if ENV == 'prod' else f"etl_training_bq_{ENV}"
 GIT_BRANCH = "develop" if ENV == "dev" else "main"
 SCHEMA_SUFFIX = f"{ENV}" if ENV == "dev" else ""
 
