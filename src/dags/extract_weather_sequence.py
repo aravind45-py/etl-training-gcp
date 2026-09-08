@@ -16,7 +16,7 @@ print("Hello Aravind you are in: ",ENV)
 GCS_BUCKET = f"etl-training-bk-{ENV}"
 BQ_DATASET = f"etl_training_bq_{ENV}"
 GIT_BRANCH = "develop" if ENV == "dev" else "main"
-SCHEMA_SUFFIX = f"_{ENV}" if ENV == "dev" else ""
+SCHEMA_SUFFIX = f"{ENV}" if ENV == "dev" else ""
 
 PROJECT_ID = os.getenv("GCP_PROJECT", "sample-training-001")
 REGION = "us-central1"
