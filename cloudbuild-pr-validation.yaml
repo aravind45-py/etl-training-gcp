@@ -1,18 +1,17 @@
 steps:
-  # 1. Install Dataform CLI & dependencies
+  # Install and run Dataform CLI in one container invocation
   - name: 'node:18'
-    entrypoint: 'npm'
-    args: ['install', '-g', '@dataform/cli@3.0.0']
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        npm install -g @dataform/cli@3.0.0
+        dataform compile --vars=env=dev
 
-  # 2. Compile Dataform code to check for broken refs, syntax errors, and JS bugs
-  - name: 'node:18'
-    entrypoint: 'dataform'
-    args: ['compile']
-
-  # 3. Validate Python Airflow DAG syntax so broken DAGs aren't pushed to Composer
+  # Validate Airflow DAG syntax
   - name: 'python:3.10-slim'
     entrypoint: 'python'
-    args: ['-m', 'py_compile', 'src/dags/extract_weather_sequence.py'] # git checkout -b test/trigger-cloud-build
+    args: ['-m', 'py_compile', 'src/dags/extract_weather_sequence.py']
 
 options:
   logging: CLOUD_LOGGING_ONLY
