@@ -121,7 +121,6 @@ with DAG(
         compilation_result={
             "git_commitish": GIT_BRANCH,
             "code_compilation_config": {
-                "schema_suffix": SCHEMA_SUFFIX,
                 "vars": {
                     "schema_suffix": SCHEMA_SUFFIX  # Passes "_dev" in DEV or "" in PROD
                 },

@@ -1,6 +1,7 @@
 config {
   type: "table",
   name: "weather_gold_table",
+  schema: constants.TARGET_SCHEMA,
   description: "Gold table containing aggregated data",
 }
 

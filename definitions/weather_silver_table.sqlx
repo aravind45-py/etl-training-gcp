@@ -1,6 +1,7 @@
 config {
   type: "table",
   name: "weather_silver_table",
+  schema: constants.TARGET_SCHEMA,
   description: "Silver table containing clean weather data extracted from the bronze weather source.",
 }
 
