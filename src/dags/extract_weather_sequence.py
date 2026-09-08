@@ -12,7 +12,7 @@ import requests,json,os
 
 
 ENV = os.getenv("ENVIRONMENT","dev")
-
+print("Hello: ",ENV)
 GCS_BUCKET = f"etl-training-bk-{ENV}"
 BQ_DATASET = f"etl_training_bq_{ENV}"
 GIT_BRANCH = "develop" if ENV == "dev" else "main"
