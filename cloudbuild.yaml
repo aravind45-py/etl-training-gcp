@@ -1,0 +1,29 @@
+steps:
+  # 1. Synchronize DAG files to target Composer's Cloud Storage Bucket
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        echo "Syncing DAGs to: ${_COMPOSER_BUCKET}"
+        gsutil -m rsync -r -d src/dags/ gs://${_COMPOSER_BUCKET}/dags/
+
+  # 2. Trigger the pipeline on the targeted Composer environment
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args:
+      - 'composer'
+      - 'environments'
+      - 'run'
+      - '${_COMPOSER_ENV_NAME}'
+      - '--location'
+      - '${_COMPOSER_LOCATION}'
+      - 'dags'
+      - 'trigger'
+      - '--'
+      - 'etl_training-dag'
+
+substitutions:
+  _COMPOSER_BUCKET: ''
+  _COMPOSER_ENV_NAME: ''
+  _COMPOSER_LOCATION: 'us-central1'
