@@ -1,7 +1,7 @@
-// Reads the schema_suffix passed from Airflow vars, defaulting to empty string
-const suffix = dataform.projectConfig.vars.schema_suffix || "";
+// Reads the 'env' variable passed from Airflow vars ('dev' or 'prod')
+const env = dataform.projectConfig.vars.env || "dev";
 
-// Dynamically sets the target dataset name
-const TARGET_SCHEMA = `etl_training_bq${suffix}`;
+// Map environment explicitly to exact schema targets
+const TARGET_SCHEMA = env === "dev" ? "etl_training_bq_dev" : "etl_training_bq";
 
 module.exports = { TARGET_SCHEMA };

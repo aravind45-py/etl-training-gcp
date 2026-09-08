@@ -122,7 +122,7 @@ with DAG(
             "git_commitish": GIT_BRANCH,
             "code_compilation_config": {
                 "vars": {
-                    "schema_suffix": SCHEMA_SUFFIX  # Passes "_dev" in DEV or "" in PROD
+                    "env": ENV  # Passes "_dev" in DEV or "" in PROD
                 },
             }
         },
