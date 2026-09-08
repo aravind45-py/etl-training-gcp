@@ -1,6 +1,5 @@
 config {
   type: "table",
-  schema: "etl_training_bq_dev",
   name: "weather_gold_table",
   description: "Gold table containing aggregated data",
 }

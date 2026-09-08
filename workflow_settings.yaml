@@ -1,4 +1,4 @@
 defaultProject: sample-training-001
-defaultDataset: etl_training_bq_dev
+defaultDataset: etl_training_bq
 defaultAssertionDataset: dataform_assertions
 dataformCoreVersion: 3.0.52

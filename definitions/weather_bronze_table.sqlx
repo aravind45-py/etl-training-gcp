@@ -1,6 +1,5 @@
 config {
   type: "declaration",
   database: "sample-training-001",
-  schema: "etl_training_bq_dev",
   name: "weather_bronze_table",
 }
