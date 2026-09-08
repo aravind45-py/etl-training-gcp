@@ -12,7 +12,7 @@ steps:
   # 3. Validate Python Airflow DAG syntax so broken DAGs aren't pushed to Composer
   - name: 'python:3.10-slim'
     entrypoint: 'python'
-    args: ['-m', 'py_compile', 'src/dags/extract_weather_sequence.py']
+    args: ['-m', 'py_compile', 'src/dags/extract_weather_sequence.py'] # git checkout -b test/trigger-cloud-build
 
 options:
   logging: CLOUD_LOGGING_ONLY
