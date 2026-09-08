@@ -1,4 +1,9 @@
 from airflow.providers.google.cloud.transfers.gcs_to_bigquery import GCSToBigQueryOperator
+from airflow.providers.google.cloud.operators.dataform import (
+    DataformCreateCompilationResultOperator,
+    DataformCreateWorkflowInvocationOperator,
+)
+
 from airflow.providers.google.cloud.hooks.gcs import GCSHook
 from airflow.operators.python import PythonOperator
 from airflow import DAG
@@ -105,5 +110,30 @@ with DAG(
         external_table=False,
         autodetect=True,       
         )
+    compile_dataform = DataformCreateCompilationResultOperator(
+        task_id="compile_dataform",
+        project_id="sample-training-001",
+        region="us-central1",
+        repository_id="etl-training-repository",
+        compilation_result={
+            "git_commitish": "develop",
+        },
+    )
 
-    task_extract_and_store_to_gcs_landing >> task_preprocess_store_to_gcs_raw >> load_to_bigQuery_bronze
+    # 2. Invoke the compiled Dataform workflow
+    # Pulls the compilation result name dynamically from XCom
+    invoke_dataform = DataformCreateWorkflowInvocationOperator(
+        task_id="invoke_dataform",
+        project_id="sample-training-001",
+        region="us-central1",
+        repository_id="etl-training-repository",
+        workflow_invocation={
+            "compilation_result": "{{ task_instance.xcom_pull(task_ids='compile_dataform')['name'] }}",
+            "invocation_config": {
+            # ADD THIS LINE: Explicitly define the execution service account
+            "service_account": "155478623400-compute@developer.gserviceaccount.com",
+            }
+        },
+    )
+
+    task_extract_and_store_to_gcs_landing >> task_preprocess_store_to_gcs_raw >> load_to_bigQuery_bronze >> compile_dataform >> invoke_dataform

@@ -6,5 +6,6 @@ config {
 }
 
 SELECT 
-*
+requested_date,
+avg(temperature_recorded) as avg_recorded_temperature 
 FROM ${ref("weather_bronze_table")}
