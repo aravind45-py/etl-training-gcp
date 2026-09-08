@@ -5,4 +5,7 @@ config {
   description: "Gold table containing aggregated data",
 }
 
-SELECT * FROM ${ref("weather_silver_table")}
+SELECT requested_date,
+avg(temperature_recorded) as avg_recorded_temperature  
+FROM ${ref("weather_silver_table")}
+group by requested_date
