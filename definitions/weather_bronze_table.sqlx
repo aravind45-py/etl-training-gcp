@@ -1,0 +1,6 @@
+config {
+type: "declaration",
+database: "sample-training-001",
+schema: constants.TARGET_SCHEMA,
+name: "weather_bronze_table"
+}

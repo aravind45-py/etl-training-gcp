@@ -1,0 +1,11 @@
+config {
+  type: "table",
+  name: "weather_gold_table",
+  schema: constants.TARGET_SCHEMA,
+  description: "Gold table containing aggregated data",
+}
+
+SELECT requested_date,
+avg(temperature_recorded) as avg_recorded_temperature  
+FROM ${ref("weather_silver_table")}
+group by requested_date
