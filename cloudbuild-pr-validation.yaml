@@ -1,0 +1,18 @@
+steps:
+  # 1. Install Dataform CLI & dependencies
+  - name: 'node:18'
+    entrypoint: 'npm'
+    args: ['install', '-g', '@dataform/cli@3.0.0']
+
+  # 2. Compile Dataform code to check for broken refs, syntax errors, and JS bugs
+  - name: 'node:18'
+    entrypoint: 'dataform'
+    args: ['compile']
+
+  # 3. Validate Python Airflow DAG syntax so broken DAGs aren't pushed to Composer
+  - name: 'python:3.10-slim'
+    entrypoint: 'python'
+    args: ['-m', 'py_compile', 'src/dags/extract_weather_sequence.py']
+
+options:
+  logging: CLOUD_LOGGING_ONLY
