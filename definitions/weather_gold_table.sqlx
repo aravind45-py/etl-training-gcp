@@ -3,6 +3,7 @@ config {
   name: "weather_gold_table",
   schema: constants.TARGET_SCHEMA,
   description: "Gold table containing aggregated data",
+dependOnDependencyAssertions: true,
 }
 
 SELECT requested_date,
