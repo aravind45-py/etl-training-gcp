@@ -11,7 +11,7 @@ steps:
   # Validate Airflow DAG syntax
   - name: 'python:3.10-slim'
     entrypoint: 'python'
-    args: ['-m', 'py_compile', 'src/dags/extract_weather_sequence.py']
+    args: ['-m', 'compileall', 'src/dags/']
 
 options:
   logging: CLOUD_LOGGING_ONLY

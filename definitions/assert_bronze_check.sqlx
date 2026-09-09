@@ -1,0 +1,23 @@
+config {
+  type: "assertion",
+  database: "sample-training-001",
+  schema: constants.TARGET_SCHEMA,
+  name: "assert_bronze_check",
+  description: "Fails if the weather_bronze_table has 0 rows before running transformations."
+}
+
+-- Assertions FAIL if the query returns any rows.
+-- This query returns 1 row ONLY if the bronze table is completely empty.
+WITH check_empty AS (
+  SELECT 
+    CASE WHEN COUNT(*) = 0 THEN 'TABLE_IS_EMPTY' END AS status
+  FROM 
+    ${ref("weather_bronze_table")}
+)
+
+SELECT 
+  * 
+FROM 
+  check_empty 
+WHERE 
+  status IS NOT NULL
