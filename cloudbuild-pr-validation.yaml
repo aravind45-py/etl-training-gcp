@@ -1,5 +1,5 @@
 steps:
-  # 1. Enforce that PRs targeting 'main' MUST come from 'dev'
+  # 1. Enforce that PRs targeting 'main' MUST come from 'dev'- direct main pull
   - name: 'bash'
     entrypoint: 'bash'
     args:
