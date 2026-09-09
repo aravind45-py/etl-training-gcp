@@ -22,6 +22,8 @@ PROJECT_ID = os.getenv("GCP_PROJECT", "sample-training-001")
 REGION = "us-central1"
 REPOSITORY_ID = "etl-training-repository"
 SERVICE_ACCOUNT = "155478623400-compute@developer.gserviceaccount.com"
+DAG_SCHEDULE = "0 10 * * *" if ENV == "dev" else None
+
 
 
 def preprocess_weather_data(request_date, json_data):
@@ -88,7 +90,7 @@ def preprocess_store_to_gcs_raw(**context):
 with DAG(
     dag_id="etl_training-dag",
     start_date=datetime(2026, 1, 1),
-    # schedule_interval=None,
+    schedule=DAG_SCHEDULE,
     catchup=False,
 ) as dag:
 
