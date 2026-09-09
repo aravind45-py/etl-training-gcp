@@ -5,7 +5,7 @@ steps:
     args:
       - '-c'
       - |
-        if [ "$_BASE_BRANCH" = "main" ] && [ "$_HEAD_BRANCH" != "dev" ]; then
+        if [ "$_BASE_BRANCH" = "main" ] && [ "$_HEAD_BRANCH" != "develop" ]; then
           echo "ERROR: Pull Requests targeting 'main' must originate from the 'dev' branch."
           echo "Current source branch: $_HEAD_BRANCH"
           exit 1
