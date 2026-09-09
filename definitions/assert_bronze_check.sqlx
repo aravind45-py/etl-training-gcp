@@ -8,6 +8,7 @@ config {
 
 -- Assertions FAIL if the query returns any rows.
 -- This query returns 1 row ONLY if the bronze table is completely empty.
+--  New Assertion testing
 WITH check_empty AS (
   SELECT 
     CASE WHEN COUNT(*) = 0 THEN 'TABLE_IS_EMPTY' END AS status
