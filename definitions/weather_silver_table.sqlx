@@ -5,7 +5,7 @@ config {
   description: "Silver table containing clean weather data extracted from the bronze weather source.",
   dependOnDependencyAssertions: true,
   assertions: {
-    nonNull:["requested_date","hour_recorded","temperature_recorded"],
+    nonNull:["requested_date","recorded_at","temperature_recorded"],
     rowConditions:[
         "temperature_recorded >= -60 AND temperature_recorded <= 60"
     ]
