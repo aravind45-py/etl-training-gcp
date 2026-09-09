@@ -1,14 +1,23 @@
 steps:
-  # Install and run Dataform CLI in one container invocation
-  - name: 'node:18'
+  # 1. Enforce that PRs targeting 'main' MUST come from 'dev'
+  - name: 'bash'
     entrypoint: 'bash'
     args:
       - '-c'
       - |
-        npm install -g @dataform/cli@3.0.0
-        dataform compile --vars=env=dev
+        if [ "$_BASE_BRANCH" = "main" ] && [ "$_HEAD_BRANCH" != "dev" ]; then
+          echo "ERROR: Pull Requests targeting 'main' must originate from the 'dev' branch."
+          echo "Current source branch: $_HEAD_BRANCH"
+          exit 1
+        fi
+        echo "Source branch check passed. Target: $_BASE_BRANCH | Source: $_HEAD_BRANCH"
 
-  # Validate Airflow DAG syntax
+  # 2. Install & Compile Dataform definitions
+  - name: 'node:18'
+    entrypoint: 'npx'
+    args: ['-p', '@dataform/cli@3.0.0', 'dataform', 'compile', '--vars=env=dev']
+
+  # 3. Recursively validate Python Airflow DAG syntax
   - name: 'python:3.10-slim'
     entrypoint: 'python'
     args: ['-m', 'compileall', 'src/dags/']
