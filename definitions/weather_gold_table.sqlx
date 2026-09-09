@@ -3,9 +3,13 @@ config {
   name: "weather_gold_table",
   schema: constants.TARGET_SCHEMA,
   description: "Gold table containing aggregated data",
+dependOnDependencyAssertions: true,
 }
 
 SELECT requested_date,
+min(temperature_recorded) as min_recorded_temperature,
+max(temperature_recorded) as max_recorded_temperature,
+count(temperature_recorded) as count_recorded_temperature,
 avg(temperature_recorded) as avg_recorded_temperature  
 FROM ${ref("weather_silver_table")}
 group by requested_date

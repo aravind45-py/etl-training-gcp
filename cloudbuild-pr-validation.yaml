@@ -1,0 +1,17 @@
+steps:
+  # Install and run Dataform CLI in one container invocation
+  - name: 'node:18'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        npm install -g @dataform/cli@3.0.0
+        dataform compile --vars=env=dev
+
+  # Validate Airflow DAG syntax
+  - name: 'python:3.10-slim'
+    entrypoint: 'python'
+    args: ['-m', 'compileall', 'src/dags/']
+
+options:
+  logging: CLOUD_LOGGING_ONLY

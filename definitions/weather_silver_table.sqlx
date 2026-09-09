@@ -3,8 +3,21 @@ config {
   name: "weather_silver_table",
   schema: constants.TARGET_SCHEMA,
   description: "Silver table containing clean weather data extracted from the bronze weather source.",
+  dependOnDependencyAssertions: true,
+  assertions: {
+    nonNull:["requested_date","recorded_at","temperature_recorded"],
+    rowConditions:[
+        "temperature_recorded >= -60 AND temperature_recorded <= 60"
+    ]
+  }
 }
 
 SELECT 
-*
+requested_date,
+lattitude AS latitude,
+longitude,
+elevation,
+TIMESTAMP(hour_recorded) AS recorded_at,
+temperature_recorded,
+timezone
 FROM ${ref("weather_bronze_table")}
