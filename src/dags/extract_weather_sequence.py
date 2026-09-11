@@ -22,7 +22,7 @@ PROJECT_ID = os.getenv("GCP_PROJECT", "sample-training-001")
 REGION = "us-central1"
 REPOSITORY_ID = "etl-training-repository"
 SERVICE_ACCOUNT = "155478623400-compute@developer.gserviceaccount.com"
-DAG_SCHEDULE = "0 10 * * *" if ENV == "dev" else None
+DAG_SCHEDULE = "30 4 * * *" if ENV == "dev" else None
 
 
 
